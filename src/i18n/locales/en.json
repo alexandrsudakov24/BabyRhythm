@@ -1,0 +1,96 @@
+{
+  "nav": {
+    "dashboard": "Today",
+    "sleep": "Sleep",
+    "feed": "Feed",
+    "awake": "Awake",
+    "stats": "Stats"
+  },
+  "login": {
+    "title": "BabyRhythm",
+    "subtitle": "Track sleep, feeding & awake time",
+    "signIn": "Sign in with Google"
+  },
+  "setup": {
+    "title": "Welcome! Tell us about your baby",
+    "namePlaceholder": "Baby's name",
+    "birthDate": "Date of birth",
+    "save": "Save"
+  },
+  "dashboard": {
+    "title": "Today",
+    "lastSleep": "Last sleep",
+    "lastFeed": "Last feed",
+    "totalSleep": "Total sleep",
+    "awakeFor": "Awake for",
+    "feedCount": "Feedings",
+    "noData": "No data yet today"
+  },
+  "sleep": {
+    "title": "Sleep",
+    "sleeping": "Sleeping…",
+    "awake": "Baby is awake",
+    "start": "Baby fell asleep",
+    "stop": "Baby woke up",
+    "duration": "Duration",
+    "history": "History",
+    "today": "Today",
+    "total": "Total today",
+    "sessions": "sessions"
+  },
+  "feed": {
+    "title": "Feeding",
+    "log": "Log feeding",
+    "lastFeed": "Last feed",
+    "ago": "ago",
+    "interval": "Interval",
+    "type": {
+      "breast_left": "Left breast",
+      "breast_right": "Right breast",
+      "bottle": "Bottle",
+      "solid": "Solid food"
+    },
+    "amount": "Amount (ml)",
+    "save": "Save",
+    "history": "History"
+  },
+  "awake": {
+    "title": "Awake",
+    "awake": "Baby is awake",
+    "sleeping": "Baby is sleeping",
+    "start": "Mark awake",
+    "stop": "Baby fell asleep",
+    "duration": "Awake for",
+    "windowTip": "Optimal awake window for this age"
+  },
+  "diaper": {
+    "title": "Diaper",
+    "log": "Log diaper change",
+    "wet": "Wet",
+    "dirty": "Dirty",
+    "both": "Both",
+    "save": "Save",
+    "lastChange": "Last change",
+    "ago": "ago"
+  },
+  "stats": {
+    "title": "Statistics",
+    "week": "This week",
+    "sleepChart": "Sleep per day (h)",
+    "avgSleep": "Avg sleep",
+    "avgFeeds": "Avg feeds/day",
+    "longestSleep": "Longest sleep",
+    "longestAwake": "Longest awake"
+  },
+  "common": {
+    "h": "h",
+    "min": "min",
+    "ago": "ago",
+    "just_now": "just now",
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "logout": "Sign out"
+  }
+}
