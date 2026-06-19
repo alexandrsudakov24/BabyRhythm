@@ -23,7 +23,7 @@ export function useActiveSession(type: BabyEvent['type']) {
 
   const start = useCallback(async () => {
     if (!user || !baby || active) return
-    await addEvent(user.uid, baby.id, { type, startTime: Date.now(), endTime: undefined })
+    await addEvent(user.uid, baby.id, { type, startTime: Date.now(), endTime: null })
   }, [user, baby, active, type])
 
   const stop = useCallback(async () => {

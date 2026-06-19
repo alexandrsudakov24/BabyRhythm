@@ -4,7 +4,7 @@ export interface BabyEvent {
   id: string
   type: EventType
   startTime: number   // Unix ms
-  endTime?: number    // null = ongoing
+  endTime?: number | null   // null = ongoing
   notes?: string
   // feed-specific
   feedType?: 'breast_left' | 'breast_right' | 'bottle' | 'solid'
