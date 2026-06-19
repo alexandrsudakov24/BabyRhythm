@@ -1,4 +1,4 @@
-import { format, formatDistanceToNow, differenceInMinutes, differenceInHours } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import { ru, enUS } from 'date-fns/locale'
 
 export function getLocale(lang: string) {

@@ -23,7 +23,6 @@ export function Dashboard() {
     [todayEvents],
   )
 
-  const lastSleep  = todayEvents.find(e => e.type === 'sleep')
   const lastFeed   = events.find(e => e.type === 'feed')
   const feedCount  = todayEvents.filter(e => e.type === 'feed').length
   const activeSleep = events.find(e => e.type === 'sleep' && !e.endTime)
