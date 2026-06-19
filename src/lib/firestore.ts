@@ -1,6 +1,6 @@
 import {
   collection, doc, addDoc, updateDoc, getDocs,
-  query, where, orderBy, limit, Timestamp, onSnapshot,
+  query, where, orderBy, limit, onSnapshot,
   type Unsubscribe,
 } from 'firebase/firestore'
 import { db } from './firebase'
@@ -22,12 +22,20 @@ export async function getBabies(uid: string): Promise<Baby[]> {
   return snap.docs.map(d => ({ id: d.id, ...d.data() } as Baby))
 }
 
+// ── Utils ──────────────────────────────────────────────────────
+/** Strip undefined values — Firestore rejects them */
+function clean<T extends object>(obj: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, v]) => v !== undefined)
+  ) as Partial<T>
+}
+
 // ── Events ─────────────────────────────────────────────────────
 export async function addEvent(
   uid: string, babyId: string,
   data: Omit<BabyEvent, 'id'>,
 ): Promise<string> {
-  const ref = await addDoc(eventsCol(uid, babyId), data)
+  const ref = await addDoc(eventsCol(uid, babyId), clean(data))
   return ref.id
 }
 
