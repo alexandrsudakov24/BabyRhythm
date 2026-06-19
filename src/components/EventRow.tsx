@@ -1,19 +1,19 @@
-import { useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { formatTime, formatDuration } from '../lib/time'
-import { deleteEvent } from '../lib/firestore'
-import { useAuth } from '../contexts/AuthContext'
-import { useBaby } from '../contexts/BabyContext'
-import type { BabyEvent } from '../types'
+import { useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { formatTime, formatDuration } from "../lib/time"
+import { deleteEvent } from "../lib/firestore"
+import { useAuth } from "../contexts/AuthContext"
+import { useBaby } from "../contexts/BabyContext"
+import type { BabyEvent } from "../types"
 
 const typeColor: Record<string, string> = {
-  sleep:  'bg-sleep/10 text-sleep',
-  feed:   'bg-feed/10 text-feed',
-  awake:  'bg-awake/10 text-awake',
-  diaper: 'bg-diaper/10 text-diaper',
+  sleep:  "bg-sleep/10 text-sleep",
+  feed:   "bg-feed/10 text-feed",
+  awake:  "bg-awake/10 text-awake",
+  diaper: "bg-diaper/10 text-diaper",
 }
 const typeIcon: Record<string, string> = {
-  sleep: '🌙', feed: '🍼', awake: '☀️', diaper: '🟡',
+  sleep: "🌙", feed: "🍼", awake: "☀️", diaper: "🟡",
 }
 
 interface Props { event: BabyEvent }
@@ -58,7 +58,7 @@ export function EventRow({ event }: Props) {
         <div className="flex-1 min-w-0">
           <div className="text-sm font-medium text-white/90 capitalize">{t(`${event.type}.title`)}</div>
           <div className="text-xs text-white/50">
-            {formatTime(event.startTime)}{event.endTime ? ` – ${formatTime(event.endTime)}` : ' →'}
+            {formatTime(event.startTime)}{event.endTime ? ` – ${formatTime(event.endTime)}` : " →"}
           </div>
         </div>
         {dur && (
@@ -70,20 +70,20 @@ export function EventRow({ event }: Props) {
         <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirm(false)} />
           <div className="relative bg-slate-900 rounded-2xl p-5 w-full max-w-xs flex flex-col gap-4">
-            <p className="text-white text-sm text-center">{t('common.deleteConfirm')}</p>
+            <p className="text-white text-sm text-center">{t("common.deleteConfirm")}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirm(false)}
                 className="flex-1 py-2.5 rounded-xl bg-slate-800 text-white/60 text-sm font-medium"
               >
-                {t('common.cancel')}
+                {t("common.cancel")}
               </button>
               <button
                 onClick={handleDelete}
                 disabled={deleting}
                 className="flex-1 py-2.5 rounded-xl bg-red-500 text-white text-sm font-semibold disabled:opacity-40"
               >
-                {deleting ? '\u2026' : t('common.delete')}
+                {deleting ? "…" : t("common.delete")}
               </button>
             </div>
           </div>
