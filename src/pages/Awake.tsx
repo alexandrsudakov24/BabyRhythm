@@ -7,14 +7,15 @@ import { TimerDisplay } from '../components/TimerDisplay'
 import { EventRow } from '../components/EventRow'
 import { useActiveSession } from '../hooks/useActiveSession'
 import { useBaby } from '../contexts/BabyContext'
-import { formatDuration, recommendedAwakeWindow, ageInMonths } from '../lib/time'
+import { formatDuration } from '../lib/time'
+import { recommendedAwakeWindow, ageInMonths } from '../lib/baby'
 
 export function Awake() {
   const { t } = useTranslation()
   const { active, elapsed, start, stop } = useActiveSession('awake')
   const { events, baby } = useBaby()
 
-  const todayStart = startOfDay(new Date()).getTime()
+  const todayStart = useMemo(() => startOfDay(new Date()).getTime(), [])
   const todayAwakes = useMemo(
     () => events.filter(e => e.type === 'awake' && e.startTime >= todayStart),
     [events, todayStart],
@@ -32,7 +33,7 @@ export function Awake() {
           color="awake"
           onClick={active ? stop : start}
         >
-          <span className="text-3xl">{active ? '☀️' : '😴'}</span>
+          <span className="text-3xl">{active ? '\u2600\ufe0f' : '\U0001f634'}</span>
           <span className="text-sm">{active ? t('awake.stop') : t('awake.start')}</span>
         </BigButton>
 
@@ -64,7 +65,7 @@ export function Awake() {
         )}
       </div>
 
-      <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">{t('sleep.history')}</h2>
+      <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">{t('awake.history')}</h2>
       {todayAwakes.length === 0
         ? <p className="text-white/30 text-sm text-center py-6">{t('dashboard.noData')}</p>
         : <div className="bg-slate-900 rounded-2xl px-4 divide-y divide-white/5">

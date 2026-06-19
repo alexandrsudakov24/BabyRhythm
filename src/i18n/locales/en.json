@@ -28,7 +28,7 @@
   },
   "sleep": {
     "title": "Sleep",
-    "sleeping": "Sleeping…",
+    "sleeping": "Sleeping\u2026",
     "awake": "Baby is awake",
     "start": "Baby fell asleep",
     "stop": "Baby woke up",
@@ -51,6 +51,7 @@
       "solid": "Solid food"
     },
     "amount": "Amount (ml)",
+    "time": "Feeding time",
     "save": "Save",
     "history": "History"
   },
@@ -61,6 +62,7 @@
     "start": "Mark awake",
     "stop": "Baby fell asleep",
     "duration": "Awake for",
+    "history": "History",
     "windowTip": "Optimal awake window for this age"
   },
   "diaper": {
@@ -79,18 +81,20 @@
     "sleepChart": "Sleep per day (h)",
     "avgSleep": "Avg sleep",
     "avgFeeds": "Avg feeds/day",
-    "longestSleep": "Longest sleep",
-    "longestAwake": "Longest awake"
+    "longestSleep": "Longest sleep (7d)",
+    "longestAwake": "Longest awake (7d)"
   },
   "common": {
     "h": "h",
     "min": "min",
     "ago": "ago",
     "just_now": "just now",
-    "loading": "Loading…",
+    "loading": "Loading\u2026",
     "cancel": "Cancel",
     "save": "Save",
     "delete": "Delete",
+    "deleteConfirm": "Delete this entry?",
+    "timeAdjustHint": "Adjust if you forgot to log it right away",
     "logout": "Sign out"
   }
 }

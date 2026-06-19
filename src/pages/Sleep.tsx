@@ -14,7 +14,7 @@ export function Sleep() {
   const { active, elapsed, start, stop } = useActiveSession('sleep')
   const { events } = useBaby()
 
-  const todayStart = startOfDay(new Date()).getTime()
+  const todayStart = useMemo(() => startOfDay(new Date()).getTime(), [])
   const todaySleeps = useMemo(
     () => events.filter(e => e.type === 'sleep' && e.startTime >= todayStart),
     [events, todayStart],
@@ -26,14 +26,13 @@ export function Sleep() {
 
   return (
     <Layout title={t('sleep.title')}>
-      {/* Big action button */}
       <div className="flex flex-col items-center gap-6 py-10">
         <BigButton
           active={!!active}
           color="sleep"
           onClick={active ? stop : start}
         >
-          <span className="text-3xl">{active ? '🌙' : '😴'}</span>
+          <span className="text-3xl">{active ? '\U0001f319' : '\U0001f634'}</span>
           <span className="text-sm">{active ? t('sleep.stop') : t('sleep.start')}</span>
         </BigButton>
 
@@ -45,7 +44,6 @@ export function Sleep() {
         )}
       </div>
 
-      {/* Today summary */}
       <div className="bg-slate-900 rounded-2xl px-4 py-4 flex justify-between items-center mb-4">
         <div>
           <p className="text-xs text-white/40">{t('sleep.total')}</p>
@@ -57,7 +55,6 @@ export function Sleep() {
         </div>
       </div>
 
-      {/* History */}
       <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">{t('sleep.history')}</h2>
       {todaySleeps.length === 0
         ? <p className="text-white/30 text-sm text-center py-6">{t('dashboard.noData')}</p>

@@ -1,5 +1,5 @@
 import {
-  collection, doc, addDoc, updateDoc, getDocs,
+  collection, doc, addDoc, updateDoc, deleteDoc, getDocs,
   query, where, orderBy, limit, onSnapshot,
   type Unsubscribe,
 } from 'firebase/firestore'
@@ -53,6 +53,19 @@ export async function updateEventNotes(
   await updateDoc(doc(eventsCol(uid, babyId), eventId), { notes })
 }
 
+export async function updateEventTimes(
+  uid: string, babyId: string,
+  eventId: string, startTime: number, endTime?: number | null,
+) {
+  await updateDoc(doc(eventsCol(uid, babyId), eventId), clean({ startTime, endTime }))
+}
+
+export async function deleteEvent(
+  uid: string, babyId: string, eventId: string,
+) {
+  await deleteDoc(doc(eventsCol(uid, babyId), eventId))
+}
+
 /** Live subscription to recent events (last 7 days) */
 export function subscribeEvents(
   uid: string, babyId: string,
@@ -69,20 +82,4 @@ export function subscribeEvents(
     const events = snap.docs.map(d => ({ id: d.id, ...d.data() } as BabyEvent))
     callback(events)
   })
-}
-
-/** Get active (ongoing) session of given type */
-export async function getActiveEvent(
-  uid: string, babyId: string, type: BabyEvent['type'],
-): Promise<BabyEvent | null> {
-  const q = query(
-    eventsCol(uid, babyId),
-    where('type', '==', type),
-    where('endTime', '==', null),
-    limit(1),
-  )
-  const snap = await getDocs(q)
-  if (snap.empty) return null
-  const d = snap.docs[0]
-  return { id: d.id, ...d.data() } as BabyEvent
 }

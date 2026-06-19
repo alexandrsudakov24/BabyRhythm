@@ -10,7 +10,7 @@ export function Dashboard() {
   const { t, i18n } = useTranslation()
   const { events } = useBaby()
 
-  const todayStart = startOfDay(new Date()).getTime()
+  const todayStart = useMemo(() => startOfDay(new Date()).getTime(), [])
   const todayEvents = useMemo(
     () => events.filter(e => e.startTime >= todayStart),
     [events, todayStart],
@@ -33,32 +33,31 @@ export function Dashboard() {
   const stats = [
     {
       label: t('dashboard.totalSleep'),
-      value: totalSleepMs ? formatDuration(totalSleepMs, t) : '—',
-      icon: '🌙', color: 'text-sleep',
+      value: totalSleepMs ? formatDuration(totalSleepMs, t) : '\u2014',
+      icon: '\U0001f319', color: 'text-sleep',
     },
     {
       label: t('dashboard.feedCount'),
-      value: feedCount > 0 ? String(feedCount) : '—',
-      icon: '🍼', color: 'text-feed',
+      value: feedCount > 0 ? String(feedCount) : '\u2014',
+      icon: '\U0001f37c', color: 'text-feed',
     },
     {
       label: t('dashboard.awakeFor'),
-      value: awakeMs ? formatDuration(awakeMs, t) : '—',
-      icon: '☀️', color: 'text-awake',
+      value: awakeMs ? formatDuration(awakeMs, t) : '\u2014',
+      icon: '\u2600\ufe0f', color: 'text-awake',
     },
     {
       label: t('dashboard.lastFeed'),
-      value: lastFeed ? formatAgo(lastFeed.startTime, i18n.language) : '—',
-      icon: '⏱️', color: 'text-white/60',
+      value: lastFeed ? formatAgo(lastFeed.startTime, i18n.language) : '\u2014',
+      icon: '\u23f1\ufe0f', color: 'text-white/60',
     },
   ]
 
   return (
     <Layout title={t('dashboard.title')}>
-      {/* Status banner */}
       {activeSleep && (
         <div className="mt-4 bg-sleep/10 border border-sleep/30 rounded-2xl px-4 py-3 flex items-center gap-3">
-          <span className="text-2xl animate-pulse">🌙</span>
+          <span className="text-2xl animate-pulse">\U0001f319</span>
           <div>
             <p className="text-sm font-semibold text-sleep">{t('sleep.sleeping')}</p>
             <p className="text-xs text-white/40">{formatAgo(activeSleep.startTime, i18n.language)}</p>
@@ -66,7 +65,6 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* Stats grid */}
       <div className="grid grid-cols-2 gap-3 mt-4">
         {stats.map(s => (
           <div key={s.label} className="bg-slate-900 rounded-2xl px-4 py-4">
@@ -77,7 +75,6 @@ export function Dashboard() {
         ))}
       </div>
 
-      {/* Recent events */}
       <div className="mt-6">
         <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">
           {t('sleep.history')}

@@ -1,5 +1,9 @@
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatTime, formatDuration } from '../lib/time'
+import { deleteEvent } from '../lib/firestore'
+import { useAuth } from '../contexts/AuthContext'
+import { useBaby } from '../contexts/BabyContext'
 import type { BabyEvent } from '../types'
 
 const typeColor: Record<string, string> = {
@@ -16,19 +20,75 @@ interface Props { event: BabyEvent }
 
 export function EventRow({ event }: Props) {
   const { t } = useTranslation()
+  const { user } = useAuth()
+  const { baby } = useBaby()
+  const [confirm, setConfirm] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   const dur = event.endTime ? event.endTime - event.startTime : null
+
+  const handlePressStart = () => {
+    longPressTimer.current = setTimeout(() => setConfirm(true), 500)
+  }
+  const handlePressEnd = () => {
+    if (longPressTimer.current) clearTimeout(longPressTimer.current)
+  }
+
+  const handleDelete = async () => {
+    if (!user || !baby) return
+    setDeleting(true)
+    await deleteEvent(user.uid, baby.id, event.id)
+    setDeleting(false)
+    setConfirm(false)
+  }
+
   return (
-    <div className="flex items-center gap-3 py-2">
-      <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${typeColor[event.type]}`}>
-        {typeIcon[event.type]}
-      </span>
-      <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-white/90 capitalize">{t(`${event.type}.title`)}</div>
-        <div className="text-xs text-white/50">{formatTime(event.startTime)}{event.endTime ? ` – ${formatTime(event.endTime)}` : ' →'}</div>
+    <>
+      <div
+        className="flex items-center gap-3 py-2 select-none"
+        onPointerDown={handlePressStart}
+        onPointerUp={handlePressEnd}
+        onPointerLeave={handlePressEnd}
+        onPointerCancel={handlePressEnd}
+      >
+        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 ${typeColor[event.type]}`}>
+          {typeIcon[event.type]}
+        </span>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-medium text-white/90 capitalize">{t(`${event.type}.title`)}</div>
+          <div className="text-xs text-white/50">
+            {formatTime(event.startTime)}{event.endTime ? ` – ${formatTime(event.endTime)}` : ' →'}
+          </div>
+        </div>
+        {dur && (
+          <span className="text-xs text-white/60 shrink-0">{formatDuration(dur, t)}</span>
+        )}
       </div>
-      {dur && (
-        <span className="text-xs text-white/60 shrink-0">{formatDuration(dur, t)}</span>
+
+      {confirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirm(false)} />
+          <div className="relative bg-slate-900 rounded-2xl p-5 w-full max-w-xs flex flex-col gap-4">
+            <p className="text-white text-sm text-center">{t('common.deleteConfirm')}</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setConfirm(false)}
+                className="flex-1 py-2.5 rounded-xl bg-slate-800 text-white/60 text-sm font-medium"
+              >
+                {t('common.cancel')}
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="flex-1 py-2.5 rounded-xl bg-red-500 text-white text-sm font-semibold disabled:opacity-40"
+              >
+                {deleting ? '\u2026' : t('common.delete')}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   )
 }

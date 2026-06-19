@@ -19,19 +19,3 @@ export interface Baby {
   birthDate: string   // ISO yyyy-MM-dd
   userId: string
 }
-
-export interface UserProfile {
-  uid: string
-  email: string | null
-  displayName: string | null
-  photoURL: string | null
-}
-
-export interface DailySummary {
-  date: string          // yyyy-MM-dd
-  totalSleepMs: number
-  sleepSessions: number
-  totalFeedCount: number
-  longestSleepMs: number
-  longestAwakeMs: number
-}
