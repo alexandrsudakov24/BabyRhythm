@@ -13,7 +13,6 @@ export function Stats() {
   const { events } = useBaby()
   const locale = getLocale(i18n.language)
 
-  // Build last-7-days sleep chart data
   const chartData = useMemo(() => {
     return Array.from({ length: 7 }, (_, i) => {
       const day = subDays(new Date(), 6 - i)
@@ -24,7 +23,7 @@ export function Stats() {
         .reduce((s, e) => s + (e.endTime! - e.startTime), 0)
       return {
         label: format(day, 'EEE', { locale }),
-        hours: Math.round(totalMs / 36_000) / 100,  // 2 decimals
+        hours: Math.round(totalMs / 36_000) / 100,
         ms: totalMs,
       }
     })
@@ -58,18 +57,18 @@ export function Stats() {
 
   return (
     <Layout title={t('stats.title')}>
-      <p className="text-xs text-white/40 mt-4 mb-3 uppercase tracking-wider">{t('stats.week')}</p>
+      <p className="text-xs text-white/60 mt-4 mb-3 uppercase tracking-wider">{t('stats.week')}</p>
 
       {/* Bar chart */}
-      <div className="bg-slate-900 rounded-2xl px-2 py-4 mb-4">
-        <p className="text-xs text-white/40 mb-3 px-2">{t('stats.sleepChart')}</p>
+      <div className="bg-slate-900 rounded-2xl px-2 py-4 mb-6">
+        <p className="text-xs text-white/60 mb-3 px-2">{t('stats.sleepChart')}</p>
         <ResponsiveContainer width="100%" height={160}>
           <BarChart data={chartData} barSize={28}>
-            <XAxis dataKey="label" tick={{ fill: '#ffffff50', fontSize: 11 }} axisLine={false} tickLine={false} />
+            <XAxis dataKey="label" tick={{ fill: '#ffffff80', fontSize: 11 }} axisLine={false} tickLine={false} />
             <YAxis hide domain={[0, 'auto']} />
             <Tooltip
               contentStyle={{ background: '#1e293b', border: 'none', borderRadius: 12, fontSize: 12 }}
-              labelStyle={{ color: '#ffffff80' }}
+              labelStyle={{ color: '#ffffff' }}
               formatter={(v: number) => [`${v}h`, '']}
             />
             <Bar dataKey="hours" radius={[6, 6, 0, 0]}>
@@ -84,15 +83,15 @@ export function Stats() {
       {/* Summary cards */}
       <div className="grid grid-cols-2 gap-3">
         {[
-          { label: t('stats.avgSleep'),    value: formatDuration(avgSleepMs, t),    icon: '🌙' },
-          { label: t('stats.avgFeeds'),    value: avgFeedsPerDay,                   icon: '🍼' },
-          { label: t('stats.longestSleep'),value: formatDuration(longestSleepMs, t),icon: '💤' },
-          { label: t('stats.longestAwake'),value: formatDuration(longestAwakeMs, t),icon: '☀️' },
+          { label: t('stats.avgSleep'),     value: formatDuration(avgSleepMs, t),     icon: '🌙' },
+          { label: t('stats.avgFeeds'),     value: avgFeedsPerDay,                    icon: '🍼' },
+          { label: t('stats.longestSleep'), value: formatDuration(longestSleepMs, t), icon: '💤' },
+          { label: t('stats.longestAwake'), value: formatDuration(longestAwakeMs, t), icon: '☀️' },
         ].map(c => (
           <div key={c.label} className="bg-slate-900 rounded-2xl px-4 py-4">
-            <div className="text-xl mb-1">{c.icon}</div>
+            <div className="text-xl mb-2">{c.icon}</div>
             <div className="text-lg font-bold text-white/90">{c.value}</div>
-            <div className="text-xs text-white/40 mt-0.5">{c.label}</div>
+            <div className="text-xs text-white/60 mt-1">{c.label}</div>
           </div>
         ))}
       </div>

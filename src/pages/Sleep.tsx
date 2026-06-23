@@ -26,31 +26,31 @@ export function Sleep() {
 
   return (
     <Layout title={t("sleep.title")}>
-      <div className="flex flex-col items-center gap-6 py-10">
+      <div className="flex flex-col items-center gap-6 py-8">
         <BigButton active={!!active} color="sleep" onClick={active ? stop : start}>
           <span className="text-3xl">{active ? "🌙" : "😴"}</span>
-          <span className="text-sm">{active ? t("sleep.stop") : t("sleep.start")}</span>
+          <span className="text-xs font-semibold">{active ? t("sleep.stop") : t("sleep.start")}</span>
         </BigButton>
         {active && (
           <div className="text-center">
-            <p className="text-xs text-white/40 mb-1">{t("sleep.sleeping")}</p>
+            <p className="text-xs text-white/60 mb-2">{t("sleep.sleeping")}</p>
             <TimerDisplay ms={elapsed} className="text-3xl text-sleep font-bold" />
           </div>
         )}
       </div>
       <div className="bg-slate-900 rounded-2xl px-4 py-4 flex justify-between items-center mb-4">
         <div>
-          <p className="text-xs text-white/40">{t("sleep.total")}</p>
-          <p className="text-xl font-bold text-sleep">{formatDuration(totalMs, t)}</p>
+          <p className="text-xs text-white/60">{t("sleep.total")}</p>
+          <p className="text-lg font-bold text-sleep mt-1">{formatDuration(totalMs, t)}</p>
         </div>
         <div className="text-right">
-          <p className="text-xs text-white/40">{t("sleep.sessions")}</p>
-          <p className="text-xl font-bold text-white/80">{todaySleeps.length}</p>
+          <p className="text-xs text-white/60">{t("sleep.sessions")}</p>
+          <p className="text-lg font-bold text-white/80 mt-1">{todaySleeps.length}</p>
         </div>
       </div>
-      <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">{t("sleep.history")}</h2>
+      <h2 className="text-xs font-semibold text-white/60 mb-3 uppercase tracking-wider">{t("sleep.history")}</h2>
       {todaySleeps.length === 0
-        ? <p className="text-white/30 text-sm text-center py-6">{t("dashboard.noData")}</p>
+        ? <p className="text-white/50 text-sm text-center py-6">{t("dashboard.noData")}</p>
         : <div className="bg-slate-900 rounded-2xl px-4 divide-y divide-white/5">
             {todaySleeps.map(e => <EventRow key={e.id} event={e} />)}
           </div>

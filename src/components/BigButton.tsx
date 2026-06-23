@@ -7,24 +7,24 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const colors = {
-  sleep:  { on: 'bg-sleep text-white shadow-sleep/40',   off: 'bg-sleep/10 text-sleep' },
-  feed:   { on: 'bg-feed text-white shadow-feed/40',     off: 'bg-feed/10 text-feed' },
-  awake:  { on: 'bg-awake text-white shadow-awake/40',   off: 'bg-awake/10 text-awake' },
-  diaper: { on: 'bg-diaper text-white shadow-diaper/40', off: 'bg-diaper/10 text-diaper' },
+  sleep:  { on: 'bg-sleep text-white',   off: 'bg-sleep/10 text-sleep' },
+  feed:   { on: 'bg-feed text-white',     off: 'bg-feed/10 text-feed' },
+  awake:  { on: 'bg-awake text-white',   off: 'bg-awake/10 text-awake' },
+  diaper: { on: 'bg-diaper text-white', off: 'bg-diaper/10 text-diaper' },
 }
 
 export function BigButton({ active, color = 'sleep', size = 'xl', children, className = '', ...props }: Props) {
   const c = colors[color]
   const s = size === 'xl'
-    ? 'w-40 h-40 text-lg rounded-full shadow-2xl'
-    : 'w-28 h-28 text-base rounded-full shadow-xl'
+    ? 'w-40 h-40 text-lg rounded-full'
+    : 'w-28 h-28 text-base rounded-full'
   return (
     <button
       {...props}
       className={`
         ${s} ${active ? c.on : c.off}
         font-semibold transition-all duration-200
-        active:scale-95 flex flex-col items-center justify-center gap-1
+        active:scale-95 flex flex-col items-center justify-center gap-2
         ${className}
       `}
     >

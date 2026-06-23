@@ -20,8 +20,8 @@ export function BottomNav() {
           to={tab.to}
           end={tab.to === '/'}
           className={({ isActive }) =>
-            `flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors
-             ${isActive ? 'text-brand-400' : 'text-white/40 hover:text-white/70'}`
+            `flex-1 flex flex-col items-center justify-center py-2 gap-1 transition-colors
+             ${isActive ? 'text-brand-400' : 'text-white/50 hover:text-white/70'}`
           }
         >
           <span className="text-lg leading-none">{tab.icon}</span>

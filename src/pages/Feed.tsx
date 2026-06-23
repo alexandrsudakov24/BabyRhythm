@@ -67,15 +67,15 @@ export function Feed() {
     <Layout title={t("feed.title")}>
       <div className="bg-slate-900 rounded-2xl px-4 py-5 mt-4 flex justify-between items-center">
         <div>
-          <p className="text-xs text-white/40">{t("feed.lastFeed")}</p>
-          <p className="text-lg font-bold text-white/90">
+          <p className="text-xs text-white/60">{t("feed.lastFeed")}</p>
+          <p className="text-lg font-bold text-white/90 mt-1">
             {lastFeed ? formatAgo(lastFeed.startTime, i18n.language) : "—"}
           </p>
         </div>
         {intervalMs && (
           <div className="text-right">
-            <p className="text-xs text-white/40">{t("feed.interval")}</p>
-            <p className="text-lg font-bold text-feed">{formatDuration(intervalMs, t)}</p>
+            <p className="text-xs text-white/60">{t("feed.interval")}</p>
+            <p className="text-lg font-bold text-feed mt-1">{formatDuration(intervalMs, t)}</p>
           </div>
         )}
       </div>
@@ -83,16 +83,16 @@ export function Feed() {
       <div className="flex justify-center py-8">
         <button
           onClick={openSheet}
-          className="w-36 h-36 rounded-full bg-feed/10 text-feed flex flex-col items-center justify-center gap-1 text-sm font-semibold active:scale-95 transition-transform"
+          className="w-36 h-36 rounded-full bg-feed/10 text-feed flex flex-col items-center justify-center gap-2 text-xs font-semibold active:scale-95 transition-transform"
         >
           <span className="text-4xl">🍼</span>
           <span>{t("feed.log")}</span>
         </button>
       </div>
 
-      <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">{t("feed.history")}</h2>
+      <h2 className="text-xs font-semibold text-white/60 mb-3 uppercase tracking-wider">{t("feed.history")}</h2>
       {feedings.length === 0
-        ? <p className="text-white/30 text-sm text-center py-6">{t("dashboard.noData")}</p>
+        ? <p className="text-white/50 text-sm text-center py-6">{t("dashboard.noData")}</p>
         : <div className="bg-slate-900 rounded-2xl px-4 divide-y divide-white/5">
             {feedings.map(e => <EventRow key={e.id} event={e} />)}
           </div>
@@ -110,7 +110,7 @@ export function Feed() {
                 <button
                   key={ft}
                   onClick={() => setFeedType(ft)}
-                  className={`py-3 rounded-xl text-sm font-medium transition-colors ${feedType === ft ? "bg-feed text-white" : "bg-slate-800 text-white/60"}`}
+                  className={`py-3 rounded-xl text-sm font-medium transition-colors ${feedType === ft ? "bg-feed text-white" : "bg-slate-800 text-white/70 hover:text-white/90"}`}
                 >
                   {t(`feed.type.${ft}`)}
                 </button>
@@ -124,7 +124,7 @@ export function Feed() {
                 placeholder={t("feed.amount")}
                 value={amountMl}
                 onChange={e => setAmountMl(e.target.value)}
-                className="bg-slate-800 text-white rounded-xl px-4 py-3 text-base placeholder:text-white/30 outline-none focus:ring-2 focus:ring-feed"
+                className="bg-slate-800 text-white rounded-xl px-4 py-3 text-base placeholder:text-white/50 outline-none focus:ring-2 focus:ring-feed"
               />
             )}
 
@@ -137,7 +137,7 @@ export function Feed() {
             <button
               onClick={logFeed}
               disabled={saving}
-              className="w-full bg-feed text-white font-semibold rounded-xl py-3 disabled:opacity-40 active:scale-95 transition-transform"
+              className="w-full bg-feed text-white font-semibold rounded-xl py-3 disabled:opacity-40 hover:bg-feed/90 active:scale-95 transition-all"
             >
               {saving ? "…" : t("feed.save")}
             </button>

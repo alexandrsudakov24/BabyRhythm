@@ -44,7 +44,7 @@ export function Dashboard() {
     { label: t("dashboard.totalSleep"), value: totalSleepMs ? formatDuration(totalSleepMs, t) : "—", icon: "🌙", color: "text-sleep" },
     { label: t("dashboard.feedCount"),  value: feedCount > 0 ? String(feedCount) : "—",          icon: "🍼", color: "text-feed" },
     { label: t("dashboard.awakeFor"),   value: awakeMs ? formatDuration(awakeMs, t) : "—",       icon: "☀️",  color: "text-awake" },
-    { label: t("dashboard.lastFeed"),   value: lastFeed ? formatAgo(lastFeed.startTime, i18n.language) : "—", icon: "⏱️", color: "text-white/60" },
+    { label: t("dashboard.lastFeed"),   value: lastFeed ? formatAgo(lastFeed.startTime, i18n.language) : "—", icon: "⏱️", color: "text-white/80" },
   ]
 
   return (
@@ -54,25 +54,25 @@ export function Dashboard() {
           <span className="text-2xl animate-pulse">🌙</span>
           <div>
             <p className="text-sm font-semibold text-sleep">{t("sleep.sleeping")}</p>
-            <p className="text-xs text-white/40">{formatAgo(activeSleep.startTime, i18n.language)}</p>
+            <p className="text-xs text-white/60">{formatAgo(activeSleep.startTime, i18n.language)}</p>
           </div>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-3 mt-4">
+      <div className="grid grid-cols-2 gap-3 mt-6">
         {stats.map(s => (
           <div key={s.label} className="bg-slate-900 rounded-2xl px-4 py-4">
-            <div className="text-xl mb-1">{s.icon}</div>
-            <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
-            <div className="text-xs text-white/40 mt-0.5">{s.label}</div>
+            <div className="text-xl mb-2">{s.icon}</div>
+            <div className={`text-lg font-bold ${s.color}`}>{s.value}</div>
+            <div className="text-xs text-white/60 mt-1">{s.label}</div>
           </div>
         ))}
       </div>
       <div className="mt-6">
-        <h2 className="text-sm font-semibold text-white/50 mb-2 uppercase tracking-wider">
+        <h2 className="text-xs font-semibold text-white/60 mb-3 uppercase tracking-wider">
           {t("sleep.history")}
         </h2>
         {todayEvents.length === 0
-          ? <p className="text-white/30 text-sm text-center py-8">{t("dashboard.noData")}</p>
+          ? <p className="text-white/50 text-sm text-center py-8">{t("dashboard.noData")}</p>
           : <div className="bg-slate-900 rounded-2xl px-4 divide-y divide-white/5">
               {todayEvents.slice(0, 10).map(e => <EventRow key={e.id} event={e} />)}
             </div>

@@ -46,7 +46,7 @@ export function EventRow({ event }: Props) {
   return (
     <>
       <div
-        className="flex items-center gap-3 py-2 select-none"
+        className="flex items-center gap-3 py-3 select-none"
         onPointerDown={handlePressStart}
         onPointerUp={handlePressEnd}
         onPointerLeave={handlePressEnd}
@@ -57,12 +57,12 @@ export function EventRow({ event }: Props) {
         </span>
         <div className="flex-1 min-w-0">
           <div className="text-sm font-medium text-white/90 capitalize">{t(`${event.type}.title`)}</div>
-          <div className="text-xs text-white/50">
+          <div className="text-xs text-white/60">
             {formatTime(event.startTime)}{event.endTime ? ` – ${formatTime(event.endTime)}` : " →"}
           </div>
         </div>
         {dur && (
-          <span className="text-xs text-white/60 shrink-0">{formatDuration(dur, t)}</span>
+          <span className="text-xs text-white/70 shrink-0">{formatDuration(dur, t)}</span>
         )}
       </div>
 
@@ -74,14 +74,14 @@ export function EventRow({ event }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirm(false)}
-                className="flex-1 py-2.5 rounded-xl bg-slate-800 text-white/60 text-sm font-medium"
+                className="flex-1 py-2.5 rounded-xl bg-slate-800 text-white/70 text-sm font-medium hover:text-white/90 transition-colors"
               >
                 {t("common.cancel")}
               </button>
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 py-2.5 rounded-xl bg-red-500 text-white text-sm font-semibold disabled:opacity-40"
+                className="flex-1 py-2.5 rounded-xl bg-red-500 text-white text-sm font-semibold disabled:opacity-40 hover:bg-red-600 transition-colors"
               >
                 {deleting ? "…" : t("common.delete")}
               </button>
