@@ -1,0 +1,37 @@
+/* Apple Watch: very compact layout */
+@media (max-width: 200px) {
+  .watch-hide {
+    display: none !important;
+  }
+
+  nav {
+    display: none !important;
+  }
+
+  header {
+    padding: 4px 8px !important;
+  }
+
+  main {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Small phones: optimize spacing */
+@media (max-height: 600px) {
+  .py-8 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  header {
+    padding: 0.5rem var(--space-md);
+  }
+}
+
+/* Tablets and larger */
+@media (min-width: 768px) {
+  .max-w-xs {
+    max-width: 24rem;
+  }
+}

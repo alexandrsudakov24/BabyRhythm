@@ -1,25 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './styles/index.css';
 
-@layer base {
-  * { -webkit-tap-highlight-color: transparent; }
-
-  html {
-    font-family: 'Inter', system-ui, sans-serif;
-    background-color: #020617;
-  }
-
-  /* Apple Watch: very compact layout */
-  @media (max-width: 200px) {
-    .watch-hide { display: none !important; }
-    nav         { display: none !important; }
-    header      { padding: 4px 8px !important; }
-    main        { padding-bottom: 0 !important; }
-  }
-}
-
-@layer utilities {
-  .safe-area-inset-top    { padding-top:    env(safe-area-inset-top); }
-  .safe-area-inset-bottom { padding-bottom: env(safe-area-inset-bottom); }
-}
