@@ -22,7 +22,13 @@ export function BabyProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user) { setBaby(null); setEvents([]); setLoading(false); return }
+    if (!user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setBaby(null)
+      setEvents([])
+      setLoading(false)
+      return
+    }
     getBabies(user.uid).then(babies => {
       setBaby(babies[0] ?? null)
       setLoading(false)
@@ -48,6 +54,7 @@ export function BabyProvider({ children }: { children: ReactNode }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useBaby() {
   const ctx = useContext(BabyContext)
   if (!ctx) throw new Error('useBaby must be inside BabyProvider')

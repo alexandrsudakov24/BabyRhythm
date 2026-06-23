@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 
 interface Props {
   value: number        // Unix ms
@@ -6,7 +7,6 @@ interface Props {
   label?: string
 }
 
-/** Converts a Unix timestamp to the local datetime-local string (YYYY-MM-DDTHH:mm) */
 function toDatetimeLocal(ms: number): string {
   const d = new Date(ms)
   const pad = (n: number) => String(n).padStart(2, '0')
@@ -15,6 +15,12 @@ function toDatetimeLocal(ms: number): string {
 
 export function TimeAdjuster({ value, onChange, label }: Props) {
   const { t } = useTranslation()
+  const [maxTime, setMaxTime] = useState<string>()
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMaxTime(toDatetimeLocal(Date.now()))
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const ms = new Date(e.target.value).getTime()
@@ -28,7 +34,7 @@ export function TimeAdjuster({ value, onChange, label }: Props) {
         type="datetime-local"
         value={toDatetimeLocal(value)}
         onChange={handleChange}
-        max={toDatetimeLocal(Date.now())}
+        max={maxTime}
         className="bg-slate-800 text-white rounded-xl px-4 py-3 text-base outline-none
                    focus:ring-2 focus:ring-feed [color-scheme:dark]"
       />

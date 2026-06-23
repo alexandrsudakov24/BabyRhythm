@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Layout } from "../components/Layout"
 import { EventRow } from "../components/EventRow"
@@ -9,6 +9,14 @@ import { startOfDay } from "date-fns"
 export function Dashboard() {
   const { t, i18n } = useTranslation()
   const { events } = useBaby()
+  const [now, setNow] = useState(0)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNow(Date.now())
+    const id = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(id)
+  }, [])
 
   const todayStart = useMemo(() => startOfDay(new Date()).getTime(), [])
   const todayEvents = useMemo(
@@ -27,7 +35,10 @@ export function Dashboard() {
   const feedCount  = todayEvents.filter(e => e.type === "feed").length
   const activeSleep = events.find(e => e.type === "sleep" && !e.endTime)
   const activeAwake = events.find(e => e.type === "awake" && !e.endTime)
-  const awakeMs = activeAwake ? Date.now() - activeAwake.startTime : null
+  const awakeMs = useMemo(
+    () => activeAwake ? now - activeAwake.startTime : null,
+    [activeAwake, now],
+  )
 
   const stats = [
     { label: t("dashboard.totalSleep"), value: totalSleepMs ? formatDuration(totalSleepMs, t) : "—", icon: "🌙", color: "text-sleep" },

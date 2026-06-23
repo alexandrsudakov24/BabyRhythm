@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { startOfDay } from "date-fns"
 import { Layout } from "../components/Layout"
@@ -16,12 +16,20 @@ export function Feed() {
   const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const { baby, events } = useBaby()
+  const [now, setNow] = useState(0)
 
   const [sheet, setSheet] = useState(false)
   const [feedType, setFeedType] = useState<BabyEvent["feedType"]>("breast_left")
   const [amountMl, setAmountMl] = useState("")
-  const [feedTime, setFeedTime] = useState(Date.now())
+  const [feedTime, setFeedTime] = useState(() => Date.now())
   const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNow(Date.now())
+    const id = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(id)
+  }, [])
 
   const todayStart = useMemo(() => startOfDay(new Date()).getTime(), [])
   const feedings = useMemo(
@@ -29,7 +37,10 @@ export function Feed() {
     [events, todayStart],
   )
   const lastFeed = events.find(e => e.type === "feed")
-  const intervalMs = lastFeed ? Date.now() - lastFeed.startTime : null
+  const intervalMs = useMemo(
+    () => lastFeed ? now - lastFeed.startTime : null,
+    [lastFeed, now],
+  )
 
   const openSheet = () => {
     setFeedTime(Date.now())
